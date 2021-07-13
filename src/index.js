@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
+import './css/fontawesome-5/css/all.min.css';
+import './css/bootstrap.min.css';
 import App from './chat/App';
 // import reportWebVitals from './reportWebVitals';
 
