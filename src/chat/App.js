@@ -4,6 +4,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import Cookies from 'js-cookie'
 import MessagesList from './MessagesList';
+import TypeMessageBar from './TypeMessageBar';
 
 class App extends React.Component {
 
@@ -98,6 +99,9 @@ class App extends React.Component {
 		]
 	};
 
+	onSend = (message) => {
+		this.setState({messagesList: [...this.state.messagesList, {'message': message, 'sender': 'user'}]});
+	}
 
 	render() {
 		return (
@@ -117,15 +121,8 @@ class App extends React.Component {
 							</span>
 						</button>
 					</div>
-					<MessagesList messagesList={this.state.messagesList}/>
-					<div className="panel-footer">
-						<div className="input-group">
-							<textarea name="" id="" rows="3" placeholder="Type message" className="form-control input-sm chat_set_height"></textarea>
-							<span className="input-group-btn">
-								<button className="send-message-btn fas fa-arrow-up" id="btn-chat"></button>
-							</span>
-						</div>
-					</div>
+					<MessagesList messagesList={this.state.messagesList} />
+					<TypeMessageBar onSendMessage={this.onSend} />
 				</div>
 			</div>
 		);
