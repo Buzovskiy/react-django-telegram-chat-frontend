@@ -28,6 +28,42 @@ class App extends React.Component {
 		this.chatboxRef = React.createRef();
 	}
 
+	state = {
+		messagesList: [
+			// { 'message': 'user message1', 'sender': 'user' },
+			// { 'message': 'manager message1', 'sender': 'manager' },
+			// { 'message': 'user message2', 'sender': 'user' },
+			// { 'message': 'manager message2', 'sender': 'manager' },
+			// { 'message': 'user message3', 'sender': 'user' },
+		]
+	};
+
+	componentDidMount() {
+		// window.navigator.geolocation.getCurrentPosition(
+		// 	position => this.setState({ lat: position.coords.latitude }),
+		// 	err => this.setState({ errorMessage: err.message })
+		// );
+		// Если сообщение приходит от сервера
+		this.chatSocket.onmessage = this.handlerOnMessageFromWebsocket;
+
+		this.chatSocket.onclose = function (e) {
+			console.error('Chat socket closed unexpectedly');
+		};
+		// setTimeout(()=>{
+		// 	this.chatSocket.send(JSON.stringify({
+		// 		'message': 'test-home'
+		// 	}));
+		// }, 3000)
+	}
+
+	handlerOnMessageFromWebsocket = e => {
+		const data = JSON.parse(e.data);
+		let {message} = data;
+		// console.log(this.state.num);
+		console.log(data);
+		this.setState({messagesList: [...this.state.messagesList, {'message': message, 'sender': 'manager'}]});
+	}
+
 	/**
 	 * Handler for showing or hiding chat window
 	 */
@@ -51,56 +87,9 @@ class App extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-		// window.navigator.geolocation.getCurrentPosition(
-		// 	position => this.setState({ lat: position.coords.latitude }),
-		// 	err => this.setState({ errorMessage: err.message })
-		// );
-		// Если сообщение приходит от сервера
-		this.chatSocket.onmessage = (e) => {
-			const data = JSON.parse(e.data);
-			// console.log(this.state.num);
-			console.log(data);
-			this.setState({ num: data.message });
-			// document.querySelector('#chat-log').value += (data.message + '\n');
-		};
-
-		this.chatSocket.onclose = function (e) {
-			console.error('Chat socket closed unexpectedly');
-		};
-		// setTimeout(()=>{
-		// 	this.chatSocket.send(JSON.stringify({
-		// 		'message': 'test-home'
-		// 	}));
-		// }, 3000)
-	}
-
-	// renderMessagesList() {
-	// 	const messages = this.state.messagesList.map((item, index) => {
-	// 		return (
-	// 			<div key={index}>{item.message}</div>
-	// 		)
-	// 	})
-	// 	return (
-	// 		<React.Fragment>
-	// 			{messages}
-	// 		</React.Fragment>
-	// 	)
-	// }
-
-	state = {
-		num: 0,
-		messagesList: [
-			{ 'message': 'user message1', 'sender': 'user' },
-			{ 'message': 'manager message1', 'sender': 'manager' },
-			{ 'message': 'user message2', 'sender': 'user' },
-			{ 'message': 'manager message2', 'sender': 'manager' },
-			{ 'message': 'user message3', 'sender': 'user' },
-		]
-	};
-
 	onSend = (message) => {
 		this.setState({messagesList: [...this.state.messagesList, {'message': message, 'sender': 'user'}]});
+
 	}
 
 	render() {

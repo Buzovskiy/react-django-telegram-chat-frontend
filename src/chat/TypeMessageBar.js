@@ -3,12 +3,7 @@ import React from 'react';
 class TypeMessageBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            value: 'Please write an essay about your favorite DOM element.'
-        };
-
-        // this.handleChange = this.handleChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
+        this.textAreaRef = React.createRef();
     }
 
     state = { userMessage: '' };
@@ -18,19 +13,36 @@ class TypeMessageBar extends React.Component {
     }
 
     onClickChatButton = () => {
-        this.props.onSendMessage(this.state.userMessage);
+        if (this.state.userMessage.trim()){
+            this.props.onSendMessage(this.state.userMessage.trim());
+            this.setState({userMessage: ''});
+        } else this.setState({userMessage: ''});
     }
+
+    onKeyEnter = (e) => {
+        if (e.keyCode === 13 && e.shiftKey === false) {  // enter, return
+            this.onClickChatButton();
+        }
+    }
+
+    // document.querySelector('#chat-message-input').onkeyup = function(e) {
+    //     if (e.keyCode === 13) {  // enter, return
+    //         document.querySelector('#chat-message-submit').click();
+    //     }
+    // };
 
     render() {
         return (
             <div className="panel-footer">
                 <div className="input-group">
                     <textarea
+                        ref={this.textAreaRef}
                         rows="3"
                         placeholder="Type message"
                         className="form-control input-sm chat_set_height"
                         value={this.state.userMessage}
                         onChange={this.onChangeTextArea}
+                        onKeyUp={this.onKeyEnter}
                     ></textarea>
                     <span className="input-group-btn">
                         <button

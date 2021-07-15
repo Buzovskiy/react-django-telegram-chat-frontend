@@ -21,10 +21,14 @@ body{
         -webkit-flex-direction: column;
         flex-direction: column;
         box-shadow: 0px 6px 13px 0px #868686;
+        border: solid 0px;
+        border-top-right-radius: 0;
+        border-top-left-radius: 20px;
+        overflow: hidden;
     }
     
     .chatbox--tray {
-        bottom: -350px;
+        bottom: -360px;
     }
     
     .chatbox--closed {
@@ -41,11 +45,9 @@ body{
     }
     
     .chatbox__title {
-        min-height: 50px;
+        min-height: 40px;
         padding-right: 10px;
         background-color: $site_color_1;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
         cursor: pointer;
     
         display: -webkit-flex;
@@ -56,9 +58,9 @@ body{
     }
     
     .chatbox__title h5 {
-        height: 50px;
+        height: 40px;
         margin: 0 0 0 15px;
-        line-height: 50px;
+        line-height: 40px;
         position: relative;
         padding-left: 20px;
     
@@ -74,6 +76,7 @@ body{
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 17px;
     }
     
     .chatbox__title h5:before {
@@ -264,7 +267,12 @@ body{
         box-shadow: 1px 1px rgba(100, 100, 100, 0.1);
     }
     .ul_msg{padding:0;margin:0px}
-    .ul_msg li{list-style:none;display:block; line-height: 20px;}
+    .ul_msg li{
+        list-style:none;
+        display:block; 
+        line-height: 20px; 
+        word-break: break-word;
+    }
     .ul_msg2{padding:0;margin:0px;text-align: right;}
     .ul_msg2 li{list-style:none;display:inline-block;margin-right: 15px;}
     .chatbox__body__message--right .chatbox_timing  {
