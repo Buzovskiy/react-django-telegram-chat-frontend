@@ -11,7 +11,7 @@ const Message = (props) => {
             <div className={"chatbox__body__message chatbox__body__message--" + side_class}>
                 <div className="chatbox_timing">
                     <ul>
-                        <li><span><i className="fa fa-calendar"></i> 22/11/2018</span></li>
+                        <li><span><i className="fa fa-calendar"></i>{props.item.unix_time} 22/11/2018</span></li>
                         <li><span><i className="fa fa-clock-o"></i> 7:00 PM</span></li>
                     </ul>
                 </div>
@@ -27,6 +27,13 @@ const Message = (props) => {
             </div>
         </React.Fragment>
     )
+}
+
+function unix_time_converter(time){
+    let date = new Date(time);
+    let dmy = date.getDate()+'/'+date.getMonth()+1+'/'+date.getFullYear();
+    let hms = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+    
 }
 
 export default Message;

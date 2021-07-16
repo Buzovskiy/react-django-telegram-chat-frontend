@@ -49,19 +49,26 @@ class App extends React.Component {
 		this.chatSocket.onclose = function (e) {
 			console.error('Chat socket closed unexpectedly');
 		};
-		// setTimeout(()=>{
-		// 	this.chatSocket.send(JSON.stringify({
-		// 		'message': 'test-home'
-		// 	}));
-		// }, 3000)
 	}
 
 	handlerOnMessageFromWebsocket = e => {
 		const data = JSON.parse(e.data);
-		let {message} = data;
-		// console.log(this.state.num);
 		console.log(data);
-		this.setState({messagesList: [...this.state.messagesList, {'message': message, 'sender': 'manager'}]});
+		let messagesList = [...this.state.messagesList];
+		if (data.hasOwnProperty('history') && data.history.length){
+			let historyMessagesList = data.history.map(item => {
+				let newItem = JSON.parse(item);
+				return {
+					message: newItem.message,
+					sender: newItem.sender,
+				}
+			});
+			messagesList.push(...historyMessagesList);
+		} else if (data.hasOwnProperty('message') && data.message) {
+			let { message, sender, unix_time } = data;
+			messagesList.push({message: message, sender: sender, unix_time: unix_time});
+		}
+		if (messagesList.length) this.setState({ messagesList: messagesList });
 	}
 
 	/**
@@ -88,8 +95,16 @@ class App extends React.Component {
 	}
 
 	onSend = (message) => {
-		this.setState({messagesList: [...this.state.messagesList, {'message': message, 'sender': 'user'}]});
-
+		//this.setState({ messagesList: [...this.state.messagesList, { 'message': message, 'sender': 'user' }] });
+		this.chatSocket.send(JSON.stringify({
+			message: message,
+			sender: 'user',
+			site_domain: window.location.hostname,
+			name: '',
+			surname: '',
+			email: '',
+			unix_time: Date.now()
+		}));
 	}
 
 	render() {
