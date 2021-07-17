@@ -3,6 +3,12 @@ import React from 'react';
 // data = new Date();
 // date.toLocaleTimeString()
 
+const getUserImage = props => {
+    if (props.item.image_src){
+        return <img src="https://www.gstatic.com/webp/gallery/2.jpg" alt="Chat user" />
+    }
+    return <div className="default-image"><span className="fas fa-user"></span></div>
+}
 
 const Message = (props) => {
     const side_class = props.item.sender === 'user' ? 'left' : 'right';
@@ -16,11 +22,13 @@ const Message = (props) => {
                         <li><span><i className="fa fa-clock-o"></i> {message_time.hms}</span></li>
                     </ul>
                 </div>
-                <img src="https://www.gstatic.com/webp/gallery/2.jpg" alt="Chat user" />
+                <div>{getUserImage(props)}</div>
                 <div className="clearfix"></div>
                 <div className="ul_section_full">
                     <ul className="ul_msg">
-                        <li className="person-name">Person Name</li>
+                        <li className="person-name">
+                            {(props.item.name+' '+props.item.surname).trim()}:
+                        </li>
                         <li>{props.item.message}</li>
                     </ul>
                     <div className="clearfix"></div>

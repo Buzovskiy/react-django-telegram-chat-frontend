@@ -151,6 +151,13 @@ body{
     
     .chatbox__body__message {
         position: relative;
+        .default-image{
+            background-color: $site_color_1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
     
     .chatbox__body__message p {
@@ -162,13 +169,15 @@ body{
         box-shadow: 1px 1px rgba(100, 100, 100, 0.1);
     }
     
-    .chatbox__body__message img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 2px solid #fcfcfc;
-        position: absolute;
-        top: 15px;
+    .chatbox__body__message{
+        img, .default-image{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fcfcfc;
+            position: absolute;
+            top: 15px;
+        }
     }
     
     .chatbox__body__message--left p {
@@ -177,8 +186,10 @@ body{
         text-align: left;padding-top: 25px;
     }
     
-    .chatbox__body__message--left img {
-        left: -5px;
+    .chatbox__body__message--left{
+        img, .default-image{
+            left: -5px;
+        }
     }
     
     .chatbox__body__message--right p {
@@ -236,12 +247,16 @@ body{
         margin-left: 3px;
         margin-right: 3px;
     }
-    .chatbox_timing ul li span{display:block;color:#747474}
+    .chatbox_timing ul li span{
+        display:block;
+        color:#747474;
+        .fa-calendar{
+            color: $site_color_1;
+            margin-right: 4px;
+        }
+    }
     .ul_msg {
-    
-        
         padding: 10px !important;
-    
     }
     .chatbox__body__message--right .ul_section_full{
         margin-right: 15px;
@@ -371,6 +386,7 @@ body{
             background: $site_color_2;
             border: none;
             color: white;
+            cursor: pointer;
             transition: 0.3s;
             &:hover{
                 background: #d55500;

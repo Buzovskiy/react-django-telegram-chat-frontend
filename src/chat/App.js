@@ -107,12 +107,11 @@ class App extends React.Component {
 	}
 
 	onSend = (message) => {
-		//this.setState({ messagesList: [...this.state.messagesList, { 'message': message, 'sender': 'user' }] });
 		this.chatSocket.send(JSON.stringify({
 			message: message,
 			sender: 'user',
 			site_domain: window.location.hostname,
-			name: '',
+			name: 'Вы',
 			surname: '',
 			email: '',
 			unix_time: Date.now()
