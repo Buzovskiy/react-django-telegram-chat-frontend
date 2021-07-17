@@ -51,24 +51,36 @@ class App extends React.Component {
 		};
 	}
 
+	fields = {
+		message: {},
+		sender: {},
+		unix_time: {},
+	}
+
 	handlerOnMessageFromWebsocket = e => {
+		let messagesList = [...this.state.messagesList];
 		const data = JSON.parse(e.data);
 		console.log(data);
-		let messagesList = [...this.state.messagesList];
-		if (data.hasOwnProperty('history') && data.history.length){
-			let historyMessagesList = data.history.map(item => {
-				let newItem = JSON.parse(item);
-				return {
-					message: newItem.message,
-					sender: newItem.sender,
-				}
-			});
-			messagesList.push(...historyMessagesList);
-		} else if (data.hasOwnProperty('message') && data.message) {
-			let { message, sender, unix_time } = data;
-			messagesList.push({message: message, sender: sender, unix_time: unix_time});
+		if (data.hasOwnProperty('serverMessagesList')){
+			messagesList.push(...data.serverMessagesList);
 		}
 		if (messagesList.length) this.setState({ messagesList: messagesList });
+
+
+
+		// if (data.hasOwnProperty('history') && data.history.length){
+		// 	let historyMessagesList = data.history.map(item => {
+		// 		let newItem = JSON.parse(item), fields = {};
+		// 		for (var field in this.fields) fields[field] = newItem[field];
+		// 		return fields;
+		// 	});
+		// 	messagesList.push(...historyMessagesList);
+		// } else if (data.hasOwnProperty('message') && data.message) {
+		// 	let fields = {}
+		// 	for (var field in this.fields) fields[field] = data[field];
+		// 	messagesList.push(fields);
+		// }
+		// if (messagesList.length) this.setState({ messagesList: messagesList });
 	}
 
 	/**

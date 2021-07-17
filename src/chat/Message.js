@@ -6,13 +6,14 @@ import React from 'react';
 
 const Message = (props) => {
     const side_class = props.item.sender === 'user' ? 'left' : 'right';
+    const message_time = unix_time_converter(props.item.unix_time);
     return (
         <React.Fragment>
             <div className={"chatbox__body__message chatbox__body__message--" + side_class}>
                 <div className="chatbox_timing">
                     <ul>
-                        <li><span><i className="fa fa-calendar"></i>{props.item.unix_time} 22/11/2018</span></li>
-                        <li><span><i className="fa fa-clock-o"></i> 7:00 PM</span></li>
+                        <li><span><i className="fa fa-calendar"></i>{message_time.dmy}</span></li>
+                        <li><span><i className="fa fa-clock-o"></i> {message_time.hms}</span></li>
                     </ul>
                 </div>
                 <img src="https://www.gstatic.com/webp/gallery/2.jpg" alt="Chat user" />
@@ -31,9 +32,15 @@ const Message = (props) => {
 
 function unix_time_converter(time){
     let date = new Date(time);
-    let dmy = date.getDate()+'/'+date.getMonth()+1+'/'+date.getFullYear();
-    let hms = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-    
+    let day = date.getDate().toString().padStart(2, '0');
+    let month = (+date.getMonth()+1).toString().padStart(2, '0');
+    let year = date.getFullYear();
+    let hour = date.getHours();
+    let minutes = date.getMinutes().toString().padStart(2, '0');
+    let seconds = date.getSeconds().toString().padStart(2, '0');
+    let dmy = day+'/'+month+'/'+year;
+    let hms = hour+':'+minutes+':'+seconds;
+    return {dmy: dmy, hms: hms};
 }
 
 export default Message;
