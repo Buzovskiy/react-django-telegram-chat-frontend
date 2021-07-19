@@ -34,17 +34,17 @@ class TypeMessageBar extends React.Component {
     render() {
         return (
             <div className="panel-footer">
-                <div className="input-group">
+                <div className="input-wrapper">
                     <textarea
                         ref={this.textAreaRef}
                         rows="3"
                         placeholder="Type message"
-                        className="form-control input-sm chat_set_height"
+                        className="chat_set_height"
                         value={this.state.userMessage}
                         onChange={this.onChangeTextArea}
                         onKeyUp={this.onKeyEnter}
                     ></textarea>
-                    <span className="input-group-btn">
+                    <span className="">
                         <button
                             className="send-message-btn fas fa-arrow-up"
                             id="btn-chat"

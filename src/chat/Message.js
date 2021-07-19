@@ -5,7 +5,8 @@ import React from 'react';
 
 const getUserImage = props => {
     if (props.item.image_src){
-        return <img src="https://www.gstatic.com/webp/gallery/2.jpg" alt="Chat user" />
+        return <img src={props.item.image_src} alt="Chat user" />
+        // https://www.gstatic.com/webp/gallery/2.jpg
     }
     return <div className="default-image"><span className="fas fa-user"></span></div>
 }
