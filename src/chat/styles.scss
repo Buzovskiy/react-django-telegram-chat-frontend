@@ -10,10 +10,6 @@
     font-weight: bold;
 }
 
-body{
-    background-color: $site_color_2;
-}
-
 .container.chat{
     .chatbox {
         position: fixed;
@@ -39,6 +35,7 @@ body{
     
     .chatbox--tray {
         bottom: -360px;
+        width: 270px;
     }
     
     .chatbox--closed {

@@ -38,7 +38,7 @@ class TypeMessageBar extends React.Component {
                     <textarea
                         ref={this.textAreaRef}
                         rows="3"
-                        placeholder="Type message"
+                        placeholder="Напишите сообщение"
                         className="chat_set_height"
                         value={this.state.userMessage}
                         onChange={this.onChangeTextArea}

@@ -20,7 +20,7 @@ class App extends React.Component {
 		};
 	}
 
-	ws_url = `ws://127.0.0.1:8000/ws/website-chat/${this.telegram_chat_session_id}/`;
+	ws_url = `${process.env.REACT_APP_CHAT_WEBSOCKET_BASE_URL}/ws/chat/${this.telegram_chat_session_id}/`;
 	chatSocket = new WebSocket(this.ws_url);
 
 	constructor(props) {
@@ -60,7 +60,6 @@ class App extends React.Component {
 	handlerOnMessageFromWebsocket = e => {
 		let messagesList = [...this.state.messagesList];
 		const data = JSON.parse(e.data);
-		console.log(data);
 		if (data.hasOwnProperty('serverMessagesList')){
 			messagesList.push(...data.serverMessagesList);
 		}
@@ -123,7 +122,7 @@ class App extends React.Component {
 			<div className="row">
 				<div onTransitionEnd={this.handleChatboxTransitionEnd} ref={this.chatboxRef} className="chatbox chatbox22 chatbox--tray">
 					<div className="chatbox__title" onClick={() => this.handleChatboxTitleClick()}>
-						<h5><span>Leave a message</span></h5>
+						<h5><span>Чат</span></h5>
 						{/* <button className="chatbox__title__tray">
 							<span></span>
 						</button> */}
