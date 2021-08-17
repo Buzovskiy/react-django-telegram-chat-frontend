@@ -5,6 +5,7 @@ import React from 'react';
 import Cookies from 'js-cookie'
 import MessagesList from './MessagesList';
 import TypeMessageBar from './TypeMessageBar';
+import translations from '../api/translations';
 
 class App extends React.Component {
 
@@ -29,20 +30,31 @@ class App extends React.Component {
 	}
 
 	state = {
-		messagesList: [
-			// { 'message': 'user message1', 'sender': 'user' },
-			// { 'message': 'manager message1', 'sender': 'manager' },
-			// { 'message': 'user message2', 'sender': 'user' },
-			// { 'message': 'manager message2', 'sender': 'manager' },
-			// { 'message': 'user message3', 'sender': 'user' },
-		]
+		messagesList: [],
+		translation: {},
 	};
 
 	componentDidMount() {
+		translations.post('/api/v1/chat/get-translations/', {
+			params : { language_code: this.props.language_code},
+		})
+		.then(response => {
+			this.setState({translation: response.data});
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+
 		// window.navigator.geolocation.getCurrentPosition(
 		// 	position => this.setState({ lat: position.coords.latitude }),
 		// 	err => this.setState({ errorMessage: err.message })
 		// );
+		this.chatSocket.onopen = () => {
+			// this.chatSocket.send(JSON.stringify({
+			// 	lang: this.props.language_code,
+			// }));
+		}
+
 		// Если сообщение приходит от сервера
 		this.chatSocket.onmessage = this.handlerOnMessageFromWebsocket;
 
@@ -122,7 +134,7 @@ class App extends React.Component {
 			<div className="row">
 				<div onTransitionEnd={this.handleChatboxTransitionEnd} ref={this.chatboxRef} className="chatbox chatbox22 chatbox--tray">
 					<div className="chatbox__title" onClick={() => this.handleChatboxTitleClick()}>
-						<h5><span>Чат</span></h5>
+						<h5><span>{this.state.translation.chat}</span></h5>
 						{/* <button className="chatbox__title__tray">
 							<span></span>
 						</button> */}
@@ -136,7 +148,7 @@ class App extends React.Component {
 						</button>
 					</div>
 					<MessagesList messagesList={this.state.messagesList} />
-					<TypeMessageBar onSendMessage={this.onSend} />
+					<TypeMessageBar onSendMessage={this.onSend} translation={this.state.translation}/>
 				</div>
 			</div>
 		);

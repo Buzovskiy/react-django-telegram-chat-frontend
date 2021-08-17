@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './chat/App';
 if (+process.env.REACT_APP_CHAT_IMPORT_FONTAWESOME) require('./css/fontawesome-5/css/all.min.css');
 
+var root = document.querySelector('.container.chat');
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App {...root.dataset}/>
   </React.StrictMode>,
-  document.querySelector('.container.chat')
+  root
 );
 
 // // If you want to start measuring performance in your app, pass a function
