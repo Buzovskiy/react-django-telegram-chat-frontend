@@ -21,7 +21,7 @@ class App extends React.Component {
 		};
 	}
 
-	ws_url = `${process.env.REACT_APP_CHAT_WEBSOCKET_BASE_URL}/ws/chat/${this.telegram_chat_session_id}/`;
+	ws_url = `${process.env.REACT_APP_CHAT_WEBSOCKET_BASE_URL}/ws/chat/${this.telegram_chat_session_id}/?language_code=${this.props.language_code}`;
 	chatSocket = new WebSocket(this.ws_url);
 
 	constructor(props) {
@@ -122,7 +122,7 @@ class App extends React.Component {
 			message: message,
 			sender: 'user',
 			site_domain: window.location.hostname,
-			name: 'Вы',
+			name: this.state.translation.you,
 			surname: '',
 			email: '',
 			unix_time: Date.now()
