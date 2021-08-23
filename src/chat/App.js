@@ -35,7 +35,7 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		translations.post(`${process.env.REACT_APP_CHAT_API_BASE_URL}/api/v1/chat/get-translations/`, {
+		translations.post(`/api/v1/chat/get-translations/?timestamp=${new Date().getTime()}`, {
 			params : { language_code: this.props.language_code},
 		})
 		.then(response => {
