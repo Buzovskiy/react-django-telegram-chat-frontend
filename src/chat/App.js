@@ -16,7 +16,7 @@ class App extends React.Component {
 		} else {
 			// Если нет куки телеграм чата, создаем
 			session_id = `${Date.now()}_${Math.round(Math.random() * 100, 0)}`;
-			document.cookie = "telegram_chat_session_id=" + session_id;
+			document.cookie = `telegram_chat_session_id=${session_id}; max-age=${3600*24*365}; path=/;`;
 			return session_id;
 		};
 	}
